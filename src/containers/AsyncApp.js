@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
     selectDataArray,
-    fetchDataArrayIfNeeded
+    fetchDataArrayIfNeeded,
+    invalidateDataArray
 } from '../actions'
 import DataArrayFilling from '../components/DataArrayFilling'
 import TabsAndGraph from '../components/TabsAndCharts'
@@ -18,8 +19,9 @@ class AsyncApp extends Component {
         this.clickHandler = this.clickHandler.bind(this);
     }
 
-    clickHandler (cred) {
-        let { dispatch } = this.props;
+    clickHandler (cred, event) {
+        let { dispatch, selectedDataArray  } = this.props;
+        dispatch(invalidateDataArray(selectedDataArray));
         dispatch(selectDataArray(cred));
         dispatch(fetchDataArrayIfNeeded(cred))
     }
@@ -29,6 +31,9 @@ class AsyncApp extends Component {
 
         return (
             <div>
+                <a onClick={this.handleRefreshClick}>
+                    Refresh
+                </a>
                 <DataArrayFilling
                     onMakeItClick={this.clickHandler}
                 />
