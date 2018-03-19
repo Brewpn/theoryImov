@@ -31,9 +31,6 @@ class AsyncApp extends Component {
 
         return (
             <div>
-                <a onClick={this.handleRefreshClick}>
-                    Refresh
-                </a>
                 <DataArrayFilling
                     onMakeItClick={this.clickHandler}
                 />
